@@ -1,5 +1,6 @@
 package com.machado.ecommerce.controller;
 
+import com.machado.ecommerce.dto.AuthRequest;
 import com.machado.ecommerce.dto.LoginRequestDTO;
 import com.machado.ecommerce.dto.RegisterRequestDTO;
 import com.machado.ecommerce.dto.UserResponseDTO;
@@ -8,10 +9,7 @@ import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -30,8 +28,13 @@ public class AuthController {
         return ResponseEntity.ok(responseDTO);
     }
 
-    public ResponseEntity<UserResponseDTO> login(@Valid @RequestBody LoginRequestDTO requestDTO) {
-        UserResponseDTO responseDTO = authService.login(requestDTO);
-        return ResponseEntity.ok(responseDTO);
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest) {
+        boolean isAuthenticated = authService.authenticateUser(authRequest.getEmail(), authRequest.getPassword());
+        if (isAuthenticated) {
+            return ResponseEntity.ok("Login successful");
+        } else {
+            return ResponseEntity.status(401).body("Invalid credentials");
+        }
     }
 }
