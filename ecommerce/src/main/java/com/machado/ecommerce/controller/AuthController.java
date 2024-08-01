@@ -1,12 +1,10 @@
 package com.machado.ecommerce.controller;
 
 import com.machado.ecommerce.dto.AuthRequest;
-import com.machado.ecommerce.dto.LoginRequestDTO;
 import com.machado.ecommerce.dto.RegisterRequestDTO;
 import com.machado.ecommerce.dto.UserResponseDTO;
 import com.machado.ecommerce.service.AuthService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
