@@ -27,12 +27,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest) {
-        boolean isAuthenticated = authService.authenticateUser(authRequest.getEmail(), authRequest.getPassword());
-        if (isAuthenticated) {
-            return ResponseEntity.ok("Login successful");
-        } else {
-            return ResponseEntity.status(401).body("Invalid credentials");
-        }
+    public ResponseEntity<UserResponseDTO> login(@Valid @RequestBody AuthRequest authRequest) {
+        return authService.login(authRequest); // Use AuthRequest directly in login
     }
 }
